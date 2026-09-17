@@ -22,7 +22,7 @@ class MainWindow(tk.Tk):
 
     def _build_menu(self) -> None:
         """Create menu bar with File -> Exit (Task Medium 7)."""
-        menu_bar = tk.Menu(self)
+        menu_bar = tk.Menu(self, tearoff=0)
 
         # Меню "Файл" (Задание Средн. №7: File -> Exit)
         file_menu = tk.Menu(menu_bar, tearoff=0)

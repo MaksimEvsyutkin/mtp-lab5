@@ -113,15 +113,22 @@ class TestGUIWidgetsAndEvents(unittest.TestCase):
     def test_menubar_has_exit_command(self):
         menubar = self.app.nametowidget(self.app.cget("menu"))
         self.assertIsNotNone(menubar)
-        # 0 is the first cascade: "Файл (File)"
-        file_menu_name = menubar.entrycget(0, "menu")
-        file_menu = self.app.nametowidget(file_menu_name)
-        labels = [
-            file_menu.entrycget(i, "label")
-            for i in range(file_menu.index(tk.END) + 1)
-            if file_menu.type(i) != "separator"
-        ]
-        self.assertTrue(any("Выход" in lbl for lbl in labels))
+        found_exit = False
+        num_entries = menubar.index(tk.END)
+        if num_entries is not None:
+            for i in range(num_entries + 1):
+                if menubar.type(i) == "cascade":
+                    menu_name = menubar.entrycget(i, "menu")
+                    submenu = self.app.nametowidget(menu_name)
+                    sub_entries = submenu.index(tk.END)
+                    if sub_entries is not None:
+                        for j in range(sub_entries + 1):
+                            if submenu.type(j) != "separator":
+                                lbl = submenu.entrycget(j, "label")
+                                if "Выход" in lbl:
+                                    found_exit = True
+                                    break
+        self.assertTrue(found_exit)
 
 
 if __name__ == "__main__":
