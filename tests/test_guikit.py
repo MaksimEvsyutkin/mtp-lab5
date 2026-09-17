@@ -113,10 +113,14 @@ class TestGUIWidgetsAndEvents(unittest.TestCase):
     def test_menubar_has_exit_command(self):
         menubar = self.app.nametowidget(self.app.cget("menu"))
         self.assertIsNotNone(menubar)
-        # Check that file menu has commands
-        file_menu_name = menubar.entrycget(1, "menu")
+        # 0 is the first cascade: "Файл (File)"
+        file_menu_name = menubar.entrycget(0, "menu")
         file_menu = self.app.nametowidget(file_menu_name)
-        labels = [file_menu.entrycget(i, "label") for i in range(file_menu.index(tk.END) + 1)]
+        labels = [
+            file_menu.entrycget(i, "label")
+            for i in range(file_menu.index(tk.END) + 1)
+            if file_menu.type(i) != "separator"
+        ]
         self.assertTrue(any("Выход" in lbl for lbl in labels))
 
 

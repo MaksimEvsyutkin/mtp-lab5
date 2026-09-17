@@ -42,8 +42,10 @@ class CanvasDrawFrame(ttk.Frame):
         clear_btn = ttk.Button(ctrl_frame, text="Очистить холст", command=self.clear_canvas)
         clear_btn.pack(side=tk.RIGHT, padx=5)
 
-        # Canvas widget
-        self.canvas = tk.Canvas(self, width=500, height=280, bg="#ffffff", highlightthickness=1, highlightbackground="#bdc3c7")
+        self.canvas = tk.Canvas(
+            self, width=500, height=280, bg="#ffffff",
+            highlightthickness=1, highlightbackground="#bdc3c7"
+        )
         self.canvas.grid(row=2, column=0, columnspan=4, pady=10, sticky="nsew")
 
         # Bind mouse events
@@ -95,9 +97,11 @@ class CanvasDrawFrame(ttk.Frame):
         if self.current_shape_id is not None:
             self.shapes_count += 1
             stype = self.shape_type.get()
-            self.info_label.config(
-                text=f"Нарисовано фигур: {self.shapes_count} | Последняя: {stype} от ({self.start_x}, {self.start_y}) до ({event.x}, {event.y})"
+            msg = (
+                f"Нарисовано фигур: {self.shapes_count} | "
+                f"Последняя: {stype} от ({self.start_x}, {self.start_y}) до ({event.x}, {event.y})"
             )
+            self.info_label.config(text=msg)
             self.current_shape_id = None
 
     def clear_canvas(self) -> None:

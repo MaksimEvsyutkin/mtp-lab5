@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Launch script for Lab 5 GUI Application."""
 
-import sys
+
 from guikit import MainWindow
 
 
